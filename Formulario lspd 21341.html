@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Formulario LSPD - FiveM (Envío a Discord)</title>
+  <style>
+    :root{--bg:#0b1220;--card:#071126;--accent:#0ea5a4;--muted:#9fb0c8}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;background:linear-gradient(180deg,#041124,#07132a);color:#e6eef6}
+    .wrap{max-width:1100px;margin:28px auto;padding:24px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+    h1{margin:0 0 8px;font-size:22px}
+    p.lead{margin:0 0 18px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:var(--card);padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+    label{display:block;font-size:13px;margin-bottom:6px;color:var(--muted)}
+    input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    textarea{min-height:100px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .btn{background:var(--accent);color:#042022;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    .rules{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;font-size:14px}
+    .muted{color:var(--muted);font-size:13px}
+    .file-list{font-size:13px;margin-top:8px}
+    .success{color:#b7f2eb}
+    .error{color:#ffb4b4}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    footer{margin-top:12px;display:flex;justify-content:space-between;align-items:center}
+    code{background:rgba(0,0,0,0.2);padding:2px 6px;border-radius:4px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Formulario de Ingreso — LSPD (FiveM)</h1>
+    <p class="lead">Rellena con sinceridad. Las solicitudes se enviarán automáticamente al canal de Discord de reclutamiento.</p>
+
+    <div class="grid">
+      <div class="card">
+        <form id="lspdForm">
+          <h3>Datos básicos</h3>
+          <div class="row">
+            <div>
+              <label>Nombre IC (Personaje)</label>
+              <input type="text" name="rpname" required />
+            </div>
+            <div>
+              <label>Nombre real / OOC</label>
+              <input type="text" name="nombre" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label>Edad (IC)</label>
+              <input type="text" name="edad" required />
+            </div>
+            <div>
+              <label>Discord / Steam</label>
+              <input type="text" name="discord" placeholder="Discord#0000 / SteamID" />
+            </div>
+          </div>
+
+          <label>Correo (OOC)</label>
+          <input type="email" name="email" />
+
+          <h3>RP y experiencia</h3>
+          <label>Tiempo roleando</label>
+          <select name="tiempoRP">
+            <option value="0-1">0-1 años</option>
+            <option value="1-2">1-2 años</option>
+            <option value="2-4">2-4 años</option>
+            <option value="4+">4+ años</option>
+          </select>
+
+          <label>Describe tu estilo de RP (máx. 800 caracteres)</label>
+          <textarea name="estilo" maxlength="800"></textarea>
+
+          <label>Roles previos / servidores</label>
+          <textarea name="previos"></textarea>
+
+          <label>Enlaces a demos / clips (YouTube, Twitch, etc.)</label>
+          <input type="text" name="clips" placeholder="https://... (separar por comas)" />
+
+          <h3>Pruebas y situaciones</h3>
+          <label>Cómo procedes en una persecución urbana (800c)</label>
+          <textarea name="persecucion" maxlength="800"></textarea>
+
+          <label>Incidente: civil agrede a un compañero dentro de patrulla</label>
+          <textarea name="incidente" maxlength="600"></textarea>
+
+          <h3>Antecedentes y referencias</h3>
+          <label>Sanciones o expulsiones previas (detalla)</label>
+          <textarea name="sanciones" maxlength="500"></textarea>
+
+          <label>Referencia 1 (nombre + contacto)</label>
+          <input type="text" name="ref1" />
+          <label>Referencia 2 (nombre + contacto)</label>
+          <input type="text" name="ref2" />
+
+          <h3>Disponibilidad y aceptación</h3>
+          <label>Disponibilidad semanal (marca días)</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+            <label><input type="checkbox" name="dias" value="Lunes"/> L</label>
+            <label><input type="checkbox" name="dias" value="Martes"/> M</label>
+            <label><input type="checkbox" name="dias" value="Miercoles"/> X</label>
+            <label><input type="checkbox" name="dias" value="Jueves"/> J</label>
+            <label><input type="checkbox" name="dias" value="Viernes"/> V</label>
+            <label><input type="checkbox" name="dias" value="Sabado"/> S</label>
+            <label><input type="checkbox" name="dias" value="Domingo"/> D</label>
+          </div>
+
+          <label style="margin-top:10px">¿Aceptas las reglas del servidor y del LSPD?</label>
+          <select name="acepta" required>
+            <option value="">Selecciona</option>
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>
+
+          <label style="margin-top:12px">Adjuntar evidencias / clips (opcional, hasta 3 archivos, 8MB c/u)</label>
+          <input type="file" id="files" name="files" accept="image/*,video/*,audio/*" multiple />
+          <div class="file-list muted" id="fileList"></div>
+
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <button type="submit" class="btn">Enviar solicitud</button>
+            <button type="button" id="saveDraft" class="btn secondary">Guardar borrador</button>
+          </div>
+
+          <div id="status" style="margin-top:12px"></div>
+        </form>
+      </div>
+
+      <aside class="card">
+        <h3>Reglas principales — FiveM & LSPD</h3>
+        <div class="rules">
+          <ul>
+            <li>🔹 Mantén el ROLEPLAY constante — No FailRP.</li>
+            <li>🔹 Prohibido RDM/VDM — sanciones inmediatas.</li>
+            <li>🔹 Respeto absoluto a jugadores y staff.</li>
+            <li>🔹 Está prohibido el uso de hacks y exploits.</li>
+            <li>🔹 Graba / conserva pruebas en situaciones críticas.</li>
+            <li>🔹 Las decisiones del staff son finales.</li>
+            <li>🔹 Miembros LSPD deben seguir reglamento interno y formación.</li>
+          </ul>
+        </div>
+
+        <h3 style="margin-top:12px">Información técnica</h3>
+        <p class="muted">Este formulario intentará enviar la solicitud a un webhook de Discord. Si tu navegador bloquea CORS, hay una alternativa con backend (Node.js) en el recuadro "Servidor Recomendado" abajo.</p>
+
+        <details style="margin-top:12px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02)">
+          <summary style="cursor:pointer">Servidor recomendado (Node.js) — copia y pega</summary>
+          <pre style="white-space:pre-wrap;margin-top:8px;color:#dff8f7;background:#041425;padding:12px;border-radius:6px;overflow:auto;font-size:13px">// server.js (Node.js + express)
+const express = require('exp
